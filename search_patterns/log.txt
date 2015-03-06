@@ -1,0 +1,40 @@
+Found DNA integration in row 413: defense response]---[DNA integration 
+Found DNA integration in row 746: DNA integration 
+Found DNA integration in row 755: DNA integration 
+Found DNA integration in row 759: DNA integration 
+Found DNA integration in row 838: DNA integration 
+Found DNA integration in row 842: DNA integration 
+Found DNA integration in row 868: DNA integration 
+Found DNA integration in row 904: DNA integration 
+Found DNA integration in row 975: DNA integration 
+Found DNA integration in row 981: DNA integration 
+Found DNA integration in row 1020: DNA integration 
+Found DNA integration in row 1070: defense response]---[DNA integration]---[signal transduction 
+Found DNA integration in row 1080: defense response]---[DNA integration]---[signal transduction 
+Found DNA integration in row 1213: DNA integration 
+Found DNA integration in row 1220: DNA integration 
+Found DNA integration in row 1221: DNA integration 
+Found DNA integration in row 1308: DNA integration 
+Found DNA integration in row 1315: DNA integration 
+Found DNA integration in row 1329: DNA integration 
+Found DNA integration in row 1331: DNA integration 
+Found DNA integration in row 1333: DNA integration]---[mannose metabolic process 
+Found DNA integration in row 1336: DNA integration 
+Found DNA integration in row 1389: DNA integration 
+Found DNA integration in row 1399: DNA integration 
+Found DNA integration in row 1400: DNA integration 
+Found DNA integration in row 1427: DNA integration 
+Found DNA integration in row 1432: DNA integration 
+Found DNA integration in row 1537: DNA integration 
+Found DNA integration in row 1600: DNA integration 
+Found DNA integration in row 1644: DNA integration 
+Found DNA integration in row 1674: DNA integration 
+Found DNA integration in row 1743: DNA integration 
+Found DNA integration in row 1772: DNA integration 
+Found DNA integration in row 1839: DNA integration 
+Found DNA integration in row 1903: DNA integration 
+Found DNA integration in row 1982: DNA integration 
+Found DNA integration in row 2053: DNA integration 
+Found DNA integration in row 2076: DNA integration 
+Found DNA integration in row 2082: DNA integration 
+Found DNA integration in row 2127: DNA integration 

@@ -1,0 +1,3 @@
+DescriptionUf;DescriptionSP;CDDesc
+folate receptor 4=H;folate receptor=H;folate=L
+izumo 1=H;izumo sperm egg fusion 1=H;sperm egg fusion=L;izumo=M
