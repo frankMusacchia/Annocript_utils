@@ -1,4 +1,4 @@
-#Differential Expression Analysis scripts -  
+#Differential Expression Analysis scripts 
 Author: Francesco Musacchia (2015)
 
 This scripts has the purpose to both get a differential expression analysis and then perform enrichment of pathways and go terms by using the output from Annocript
@@ -71,9 +71,9 @@ HOW TO USE: Put this script in a folder you want together with DE_analysis_gener
 **perl regulation_plot.pl ann_out de_table out_type organism_name go_term_association**
 
 WHERE: 
-  ann_out is the filtered Annocript output
-  de_table is the output table from the script DE_analysis.R 
-  out_type [go|pathways] specifies which kind of ontology you want to plot
-  organism_name name of the organism you are using. Will be used for names of files
-  go_terms_association: needed if out_type=go, you can choose go terms associated to proteins or domains [proteins|domains]
+- ann_out is the filtered Annocript output
+- de_table is the output table from the script DE_analysis.R 
+- out_type [go|pathways] specifies which kind of ontology you want to plot
+- organism_name name of the organism you are using. Will be used for names of files
+- go_terms_association: needed if out_type=go, you can choose go terms associated to proteins or domains [proteins|domains]
 OUTPUT: you will find both text tables and R plots in a folder named expression_plots in the working folder you are using
