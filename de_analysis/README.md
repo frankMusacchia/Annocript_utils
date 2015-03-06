@@ -40,7 +40,7 @@ Where:
 
 It returns tabular files for each combination of samples.
 
-###GO terms and Pathways enrichments 
+###GO terms and Pathways enrichments (GO_analysis.R and PW_analysis.R)
 
 Execute this script with the following command in linux/unix systems:
 
