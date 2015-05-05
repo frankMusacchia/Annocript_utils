@@ -12,20 +12,20 @@
 # A final string that: if it is "sign", the minimum number of transcripts is from the significant table  while if it is
 #				"ann" it is from the annocript output table
 
-#R CMD BATCH --no-save --no-restore '--args  <input_folder> <annocript_filt_out> <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]>' PW_analysis_1.R
+#R CMD BATCH --no-save --no-restore '--args  <output_folder> <annocript_filt_out> <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]>' PW_analysis_1.R
 
 #Let's read the parameters and see what you put there!
 args <- commandArgs(trailingOnly = TRUE)
 #The samples consiedered are  - please comment whenever you will not use all
 length(args)
 if (length(args)<7){
-	stop("USAGE: R CMD BATCH --no-save --no-restore '--args <input_folder> 
+	stop("USAGE: R CMD BATCH --no-save --no-restore '--args <output_folder> 
 	<path_to_annocript_filt_out>  <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]>' PW_analysis_1.R")
 }
 
 #Folder where all is taken and output goes
-input_folder = args[1]
-input_folder
+output_folder = args[1]
+output_folder
 # Indicate name and path of the ANNOCRIPT TABLE containing the annotations of the whole transcriptome by ANNOCRIPT
 anno =  args[2]#'cymodocea_filt_cpm1per2_uniref_2014_08_ann_out.txt'
 anno
@@ -56,6 +56,10 @@ min
 min_respect_to = args[7]
 min_respect_to
 
+#tag
+tag = args[8]
+tag
+
 
 #NOT OFTEN CHANGED
 #To print the table with percentages
@@ -82,7 +86,7 @@ params = paste(organism,paste("min",min,sep=""),paste("pval",gsub("\\.","",toStr
 experName = strsplit(signifTable,"\\.")
 
 #The title to assign to various files in ouput
-title = paste(params,unlist(experName)[1]," ")
+title = paste(params,tag,sep=" ")
 
 #-------------------------------------------------------
 # END OF PARAMETERS TO SET UP BEFORE TO RUN THE ANALYSIS
@@ -145,8 +149,8 @@ calculate.enrichments = function(div.sel,div.uni,n.sel,n.uni) {
 ##########################
 
 #Reading the tables
-uni.t = read.delim(file=paste(input_folder,anno,sep="/"),sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F)
-d = read.table(file=paste(input_folder,signifTable,sep="/"),sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F)
+uni.t = read.delim(file=anno,sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F,row.names=1)
+d = read.table(file=signifTable,sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F)
 
 
 #Filtering using the Annocript Output
@@ -155,8 +159,7 @@ if(col.signifTable==0) {
 } else sel = unique(d[,col.signifTable])
 
 sel.t = uni.t[rownames(uni.t) %in% sel,]#Creating a filtered annocript output with only the elements present in sel
-
-
+dim(sel.t)
 n.uni = length(unique(rownames(uni.t)))#number of unique ids in the annocript output
 n.sel = length(sel)#number of rows in sel
 
@@ -207,11 +210,11 @@ sig.l3 = subset(res.l3,padj<=p.filt)#
 
 #PRINTING A TABULAR FILE WITH ALL THE RESULTS
 restab = rbind(sig.l1,sig.l2,sig.l3)
-write.table(restab,file=paste(input_folder,paste(gsub(' ','_',title),'PW_enriched.txt',sep='_'),sep="/") ,row.names=F,sep='\t',quote=F)
+write.table(restab,file=paste(output_folder,paste(gsub(' ','_',title),'PW_enriched.txt',sep='_'),sep="/") ,row.names=F,sep='\t',quote=F)
 
 
 #PRINTING THE PLOTS
-pdf(file= paste(input_folder,paste(gsub(' ','_',title),'PW_enriched.pdf',sep='_'),sep="/") ,width=15,height=10)
+pdf(file= paste(output_folder,paste(gsub(' ','_',title),'PW_enriched.pdf',sep='_'),sep="/") ,width=15,height=10)
 par(las=2,mar=c(5,25,5,5))
 
 sig.l1 = tail(sig.l1,topn.toplot)
