@@ -3,7 +3,7 @@
 #-------------------------------------------------
 # PARAMETERS TO SET UP BEFORE TO RUN THE ANALYSIS
 #-------------------------------------------------
-# This script takes in input an input folder where your differential analysis table is present
+# This script takes in input an output folder where your differential analysis table is present
 # the output from Annocript
 # the file with the significan transcripts
 # the name of the organism you are using
@@ -14,20 +14,20 @@
 # go_map - the file with the GO terms mapping
 
 
-#R CMD BATCH --no-save --no-restore '--args <input_folder> <annocript_filt_out> <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]> <go mapping>' GO_analysis_4.R
+#R CMD BATCH --no-save --no-restore '--args <output_folder> <annocript_filt_out> <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]> <go mapping> <tag>' GO_analysis_4.R
 
 #Let's read the parameters and see what you put there!
 args <- commandArgs(trailingOnly = TRUE)
 #The samples consiedered are 4 - please comment whenever you will not use all
 length(args)
 if (length(args)<8){
-	stop("USAGE: R CMD BATCH --no-save --no-restore '--args <input_folder> 
-	<path_to_annocript_filt_out>  <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]> <go mapping>' GO_analysis_4.R")
+	stop("USAGE: R CMD BATCH --no-save --no-restore '--args <output_folder> 
+	<path_to_annocript_filt_out>  <significant_transcripts_file> <organism_name> <p-value> <min_transcr> <min_respect_to[ann|sign]> <go mapping> <tag>' GO_analysis_4.R")
 }
 
-#Folder where all is taken and output goes
-input_folder = args[1]
-input_folder
+#Folder where output goes
+output_folder = args[1]
+output_folder
 
 # Indicate name and path of the ANNOCRIPT TABLE containing the annotations of the whole transcriptome by ANNOCRIPT
 anno =  args[2]#'cymodocea_filt_cpm1per2_uniref_2014_08_ann_out.txt'
@@ -63,6 +63,10 @@ min_respect_to
 # Indicate name and path of the file containing the mapping between the GO id and the definition
 gomap = args[8]
 
+#tag
+tag = args[9]
+tag
+
 #To print the table with percentages
 perc_tab = 0
 
@@ -82,11 +86,9 @@ prop.alt = 'g'
 
 #Parameters used
 params = paste(organism,paste("min",min,sep=""),paste("pval",gsub("\\.","",toString(p.filt)),sep=""),sep="_")#'cymodocea_min5_pval01 NT_TT_significant'
-#Experiment name
-experName = strsplit(signifTable,"\\.")
 
 #The title to assign to various files in ouput
-title = paste(params,unlist(experName)[1]," ")
+title = paste(params,tag,sep=" ")
 
 #-------------------------------------------------------
 # END OF PARAMETERS TO SET UP BEFORE TO RUN THE ANALYSIS
@@ -151,8 +153,8 @@ calculate.enrichments.ann = function(div.sel,div.uni,n.sel,n.uni,go) {
 
 #Reading the tables
 go = read.table(file=gomap,sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F)
-uni.t = read.delim(file=paste(input_folder,anno,sep="/"),sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F,row.names=1)
-d = read.table(file=paste(input_folder,signifTable,sep="/"),sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F)
+uni.t = read.delim(file=anno,sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F,row.names=1)
+d = read.table(file=signifTable,sep='\t',header=T,quote='',comment.char='',stringsAsFactors=F)
 
 
 #Filtering using the Annocript Output
@@ -247,7 +249,7 @@ if(nrow(sig.cc) >= 1){
 
 #Finalizing the creation of a table with all the enrichments obtained for all bp, mf, cc
 restab = rbind(sig.bp,sig.mf,sig.cc)
-write.table(restab,file=paste(input_folder,paste(gsub(' ','_',title),'GO_enriched.txt',sep='_'),sep="/") ,row.names=F,sep='\t',quote=F)
+write.table(restab,file=paste(output_folder,paste(gsub(' ','_',title),'GO_enriched.txt',sep='_'),sep="/") ,row.names=F,sep='\t',quote=F)
 
 perctab = NULL
 
@@ -259,11 +261,9 @@ if (nrow(sig.cc) >= 1)
   perctab = rbind(perctab,cc.perc.tab)
 
 if (exists("perctab") & perc_tab == 1)  
-  write.table(perctab,file=paste(input_folder,paste(gsub(' ','_',title),'perctab.txt',sep='_'),sep="/"),row.names=F,sep='\t',quote=F)
+  write.table(perctab,file=paste(output_folder,paste(gsub(' ','_',title),'perctab.txt',sep='_'),sep="/"),row.names=F,sep='\t',quote=F)
 
-
-
-pdf(file=paste(input_folder,paste(gsub(' ','_',title),'GO_enriched.pdf',sep='_'),sep="/") ,width=15,height=10)
+pdf(file=paste(output_folder,paste(gsub(' ','_',title),'GO_enriched.pdf',sep='_'),sep="/") ,width=15,height=10)
 par(las=2,mar=c(5,25,5,5))
 
 sig.bp = tail(sig.bp,topn.toplot)
